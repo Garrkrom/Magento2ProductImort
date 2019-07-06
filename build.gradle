@@ -1,15 +1,26 @@
 plugins {
     id 'java'
+    id 'idea'
+    id 'application'
 }
 
+group: 'de.hanno-soehngen'
 version '1.0-SNAPSHOT'
 
 sourceCompatibility = 1.8
+mainClassName 'de.hanno-soehngen.magento2productimport.main'
 
 repositories {
     mavenCentral()
 }
 
 dependencies {
-    testCompile group: 'junit', name: 'junit', version: '4.12'
+
+    compile group: 'org.apache.poi', name: 'poi', version: '4.1.0'
+    compile group: 'org.apache.poi', name: 'poi-ooxml', version: '4.1.0'
+    compile group: 'commons-cli', name: 'commons-cli', version: '1.4'
+
+    testRuntime 'org.junit.jupiter:junit-jupiter-engine:5.5.0-M1'
+    testCompile group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: '5.5.0-M1'
+    testCompile group: 'org.mockito', name: 'mockito-core', version: '2.28.2'
 }
