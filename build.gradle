@@ -8,7 +8,7 @@ group: 'de.hanno-soehngen'
 version '1.0-SNAPSHOT'
 
 sourceCompatibility = 1.8
-mainClassName 'de.hanno-soehngen.magento2productimport.main'
+mainClassName 'shop.nawi.magento2productimport.Main'
 
 repositories {
     mavenCentral()
