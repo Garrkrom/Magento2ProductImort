@@ -4,11 +4,11 @@ plugins {
     id 'application'
 }
 
-group: 'de.hanno-soehngen'
+group 'de.hanno-soehngen'
 version '1.0-SNAPSHOT'
 
 sourceCompatibility = 1.8
-mainClassName 'shop.nawi.magento2productimport.Main'
+mainClassName = 'shop.nawi.magento2productimport.Main'
 
 repositories {
     mavenCentral()
