@@ -19,8 +19,15 @@ dependencies {
     compile group: 'org.apache.poi', name: 'poi', version: '4.1.0'
     compile group: 'org.apache.poi', name: 'poi-ooxml', version: '4.1.0'
     compile group: 'commons-cli', name: 'commons-cli', version: '1.4'
+    // https://mvnrepository.com/artifact/org.apache.odftoolkit/simple-odf
+    compile group: 'org.apache.odftoolkit', name: 'simple-odf', version: '0.8.2-incubating'
 
     testRuntime 'org.junit.jupiter:junit-jupiter-engine:5.5.0-M1'
     testCompile group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: '5.5.0-M1'
     testCompile group: 'org.mockito', name: 'mockito-core', version: '2.28.2'
+}
+
+task runApp(type: JavaExec) {
+    main = 'shop.nawi.magento2productimport.Main'
+    args '-i "/home/hanno/IdeaProjects/Magento2ProductImort/res/input.ods" -o "/home/hanno/IdeaProjects/Magento2ProductImort/res/output.csv" -m "/home/hanno/IdeaProjects/Magento2ProductImort/res/manufacturer.ods"'
 }

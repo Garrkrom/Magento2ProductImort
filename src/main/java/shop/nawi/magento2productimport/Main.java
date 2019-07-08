@@ -1,9 +1,12 @@
 package shop.nawi.magento2productimport;
 
 import org.apache.commons.cli.ParseException;
+import shop.nawi.magento2productimport.file.ods.OdsFile;
 import shop.nawi.magento2productimport.parameters.Parser;
 import shop.nawi.magento2productimport.parameters.Settings;
 
+import java.awt.*;
+import java.nio.file.Paths;
 import java.util.Set;
 
 public class Main {
@@ -22,6 +25,14 @@ public class Main {
         System.out.println(Settings.getInputFile());
         System.out.println(Settings.getManufactuererDataFile());
         System.out.println(Settings.getOutputFile());
+
+
+        try {
+            OdsFile inFile = new OdsFile(Paths.get(Settings.getInputFile()), null);
+        } catch (Exception ex) {
+            System.out.println("Error in input file: " + Paths.get(Settings.getInputFile() + "with exception:\n" + ex.getMessage()));
+            System.exit(1);
+        }
 
         // Parse the input file
         String[] magento2DefCols = {
@@ -103,6 +114,6 @@ public class Main {
         String[] magento2ReqCols = {
                 "associated_skus"
         };
-
+        System.out.println("Files parse success!");
     }
 }

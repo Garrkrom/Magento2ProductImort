@@ -3,24 +3,36 @@ package shop.nawi.magento2productimport.file;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
+import java.net.URI;
 import java.nio.charset.Charset;
-import java.nio.file.Files;
-import java.nio.file.Path;
+import java.nio.file.*;
 import java.nio.file.attribute.FileAttribute;
+import java.util.ArrayList;
+import java.util.Hashtable;
+import java.util.Map;
 
 public abstract class AbstractFile {
 
-    private final Path _fileNamePath;
+    protected final Path _fileNamePath;
     protected BufferedReader _fileReader;
     protected Files _file;
 
     protected String[] _header;
 
+    protected AbstractFile(){
+        _fileNamePath = Paths.get("");
+        initialize();
+    }
+
     protected AbstractFile(Path fNamePath, FileAttribute attr) /* throws IOException */ {_fileNamePath = fNamePath; checkFile(attr); initialize();}
 
-    protected Path getFilename() {return _fileNamePath;}
+    protected Path getFilenameAsPath() { return _fileNamePath; }
 
-    private void initialize() {}
+    protected String getFilenameAsString() { return _fileNamePath.toString(); }
+
+    protected void initialize() {}
+
+    abstract protected boolean checkFileAttributes(FileAttribute attr);
 
     private void checkFile(FileAttribute attr) /* throws IOException */ {
         Charset charset = Charset.forName("UTF-8");
@@ -35,8 +47,9 @@ public abstract class AbstractFile {
          */
     }
 
+    abstract protected void readHeader(ArrayList<Hashtable> header);
+
     abstract protected boolean testFileIsValid(String fName);
-    abstract protected void setFileHeader(String[] fHeader);
 
     abstract protected boolean printLineToFile(String fName);
 
