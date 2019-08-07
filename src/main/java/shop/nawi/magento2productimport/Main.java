@@ -1,13 +1,11 @@
 package shop.nawi.magento2productimport;
 
 import org.apache.commons.cli.ParseException;
-import shop.nawi.magento2productimport.file.ods.OdsFile;
+import shop.nawi.magento2productimport.file.xlsx.XlsxFile;
 import shop.nawi.magento2productimport.parameters.Parser;
 import shop.nawi.magento2productimport.parameters.Settings;
 
-import java.awt.*;
 import java.nio.file.Paths;
-import java.util.Set;
 
 public class Main {
 
@@ -28,7 +26,7 @@ public class Main {
 
 
         try {
-            OdsFile inFile = new OdsFile(Paths.get(Settings.getInputFile()), null);
+            XlsxFile inFile = new XlsxFile(Paths.get(Settings.getInputFile()), null);
         } catch (Exception ex) {
             System.out.println("Error in input file: " + Paths.get(Settings.getInputFile() + "with exception:\n" + ex.getMessage()));
             System.exit(1);

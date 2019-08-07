@@ -1,19 +1,17 @@
-package shop.nawi.magento2productimport.file.ods;
+package shop.nawi.magento2productimport.file.xlsx;
 
 import shop.nawi.magento2productimport.file.AbstractFile;
 
 import java.nio.file.Path;
 import java.nio.file.attribute.FileAttribute;
-import java.util.ArrayList;
-import java.util.Map;
 
-public abstract class AbstractOdsFile extends AbstractFile {
+public abstract class AbstractXlsxFile extends AbstractFile {
 
-    protected AbstractOdsFile() {
+    AbstractXlsxFile() {
         super();
     }
 
-    protected AbstractOdsFile(Path fNamePath, FileAttribute attr) /* throws IOException */ {
+    AbstractXlsxFile(Path fNamePath, FileAttribute attr) /* throws IOException */ {
         super(fNamePath, attr);
     }
 

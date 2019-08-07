@@ -1,16 +1,15 @@
-package shop.nawi.magento2productimport.file.ods;
+package shop.nawi.magento2productimport.file.xlsx;
 
 import org.odftoolkit.simple.SpreadsheetDocument;
 import org.odftoolkit.simple.table.Row;
 import org.odftoolkit.simple.table.Table;
 
-import javax.net.ssl.SSLEngineResult;
 import java.nio.file.Path;
 import java.nio.file.attribute.FileAttribute;
 import java.util.ArrayList;
 import java.util.Hashtable;
 
-public class OdsFile extends AbstractOdsFile {
+public class XlsxFile extends AbstractXlsxFile {
 
     private String[] _fileHeader;
     private SpreadsheetDocument _odsDoc;
@@ -20,19 +19,27 @@ public class OdsFile extends AbstractOdsFile {
     private Row _headerRow;
     private Hashtable<String, String> _headerHashtable = new Hashtable<>();
 
-    private OdsFile() {
+    private XlsxFile() {
         super();
     }
 
-    public OdsFile(Path fNamePath, FileAttribute attr) throws Exception {
+    /**
+     *
+     * @param fNamePath
+     * @param attr
+     * @throws Exception
+     */
+    public XlsxFile(Path fNamePath, FileAttribute attr) throws Exception {
         super(fNamePath, attr);
         fNamePath = fNamePath.toRealPath();
         _odsDoc = SpreadsheetDocument.loadDocument(fNamePath.toString());
         _productData = _odsDoc.getSheetByIndex(0);
         _numCols = _productData.getColumnCount();
         _numRows = _productData.getRowCount();
+        _headerRow = _productData.getRowByIndex(0);
 
-        Row _headerRow = _productData.getRowByIndex(0);
+        _fileHeader = new String[_numCols];
+
         createHeaderHashtable(_headerRow);
 
         if(checkFileAttributes(attr)) {
@@ -40,16 +47,38 @@ public class OdsFile extends AbstractOdsFile {
         }
     }
 
-    public Hashtable<String, String> getOdsLine(int rowNum) throws IllegalAccessException {
-        Hashtable<String, String> line = new Hashtable<String, String>();
+    /**
+     * Return line of the spreadsheet as a hashtable
+     *
+     * @param rowNum Row number of the spreadsheet
+     * @return Hashtable<String, String> Key = 0-N, Value = String value of cell
+     * @throws IllegalAccessException
+     */
+    public Hashtable<Integer, String> getOdsLine(int rowNum) throws IllegalAccessException {
+        Hashtable<Integer, String> line = new Hashtable<Integer, String>();
         Row row = _productData.getRowByIndex(rowNum);
-
+        
         for(int i = 0; i <= _numCols; i++) {
             String cellValue = row.getCellByIndex(i).getStringValue();
             if(cellValue == null) {
                 throw new IllegalAccessException("The number of cells in " + (rowNum + 1) + " row does not match the header.\nNear " + row.getCellByIndex(i-1).getStringValue());
             }
-            line.put(_headerHashtable.get(String.valueOf(i)), cellValue);
+            _header[i] = cellValue;
+            line.put(i , cellValue);
+        }
+        return line;
+    }
+
+    public Hashtable<String, String> getOdsLineByHeaderValueHashtable(int rowNum) throws IllegalAccessException {
+        Hashtable<String, String> line = new Hashtable<>();
+        Row row = _productData.getRowByIndex(rowNum);
+
+        for (int i = 0; i <= _numCols; i++) {
+            String cellValue = row.getCellByIndex(i).getStringValue();
+            if(cellValue == null) {
+                throw new IllegalAccessException("The number of cells in " + (rowNum + 1) + " row does not match the header.\nNear " + row.getCellByIndex(i-1).getStringValue());
+            }
+            line.put(_headerHashtable.get(Integer.toString(i)), cellValue);
         }
         return line;
     }

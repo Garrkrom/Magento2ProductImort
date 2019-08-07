@@ -1,10 +1,7 @@
 <component name="libraryTable">
   <library name="odftoolkit">
-    <CLASSES>
-      <root url="file://$PROJECT_DIR$/lib/odftoolkit-0.6.2-incubating" />
-    </CLASSES>
+    <CLASSES />
     <JAVADOC />
     <SOURCES />
-    <jarDirectory url="file://$PROJECT_DIR$/lib/odftoolkit-0.6.2-incubating" recursive="false" />
   </library>
 </component>
